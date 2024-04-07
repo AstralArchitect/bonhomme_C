@@ -1,11 +1,19 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
-#include <windows.h>
 
 #define HEIGTH 5
 #define WIDTH 20
 #define NB_IMAGES 4
+
+void sleep_ms(unsigned long milliseconds) {
+    struct timespec ts;
+
+    ts.tv_sec = milliseconds / 1000;
+    ts.tv_nsec = (milliseconds % 1000) * 1000000;
+
+    nanosleep(&ts, NULL);
+}
 
 int main() {
     int matrice[NB_IMAGES][HEIGTH][WIDTH] = {
@@ -54,7 +62,6 @@ int main() {
             {0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0}
         }
     };
-    srand(time(NULL));
     printf("\e[?25l\e[2J");
     for (int i = 0; i < 10; i++)
     {
@@ -70,7 +77,7 @@ int main() {
                 }
                 printf("\e[40m\n");
             }
-            Sleep(100);
+            sleep_ms(100);
         }
     }   
     printf("\e[1;1H");
